@@ -14,29 +14,6 @@ def index():
     products = cursor.fetchall()
     conn.close()
 
-    # products_per_page=20;
-    # page=request.args.get('page')
-    # last=math.ceil(len(products)/products_per_page)
-    
-    # if(not str(page).isnumeric()):
-    #     page=1
-    # page=int(page)
-
-    # if(page!=last):
-    #     products_list=products[(page-1)*products_per_page:((page-1)*products_per_page + products_per_page )]
-    # else:
-    #     products_list=products[(page-1)*products_per_page : ((page-1)*products_per_page + products_per_page ) -10]
-
-    # if(page==1):
-    #     prev='#'
-    #     next="/?page="+str(page+1)
-    # elif(page==last):
-    #     next="#"
-    #     prev="/?page="+str(page-1)
-    # else:
-    #     prev="/?page="+str(page-1)
-    #     next="/?page="+str(page+1)
-        
     
     return render_template('index.html',products_list=products)
 
@@ -62,11 +39,10 @@ def generate_products():
 def sort_asc():
     conn = sqlite3.connect('products.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM products ORDER BY Product_Name ASC ')
+    cursor.execute('SELECT * FROM products ORDER BY id ASC ')
     products = cursor.fetchall()
     conn.close()
 
-    # return redirect('/')
     return render_template('index.html',products_list=products)
 
 
@@ -79,7 +55,6 @@ def sort_desc():
     conn.close()
    
     return render_template('index.html',products_list=products)
-    # return redirect('/')
     
 @app.route('/reduce_stock')
 def reduce_stock():
@@ -91,7 +66,7 @@ def reduce_stock():
     products = cursor.fetchall()
     conn.close()
 
-    # return redirect('/')
+
     return render_template('index.html',products_list=products)
 
 @app.route('/increase_stock')
@@ -103,8 +78,26 @@ def increase_stock():
     cursor.execute('SELECT * FROM products')
     products = cursor.fetchall()
     conn.close()
-    # return redirect('/')
+
     return render_template('index.html',products_list=products)
     
 
 
+db file 
+---------------------------------
+
+import sqlite3
+
+
+conn = sqlite3.connect('products.db')
+cursor = conn.cursor()
+cursor.execute('DROP TABLE  IF EXISTS products')
+cursor.execute(''' 
+               CREATE TABLE  products(
+                    id INTEGER PRIMARY KEY,
+                    Product_Name  TEXT  NOT NULL,
+                    Stock_On_Hand  INTEGER NOT NULL 
+                )''')
+
+conn.commit()
+conn.close()
