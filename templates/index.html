@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Home</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>    
+
+   
+<body>
+    <h1>Product Inventory</h1>
+    <div class="btn-container">
+    
+ 
+        <button onclick="window.location.href='/generate_products'">Generate Products</button>
+        <button onclick="window.location.href='/sort_asc'">Sort Ascending by Product_Name</button>
+        <button onclick="window.location.href='/sort_desc'">Sort Descending by Stock_On_Hand</button>
+        <button onclick="window.location.href='/reduce_stock'">Reduce Stock by 2</button>
+        <button onclick="window.location.href='/increase_stock'">Increase Stock for Even-Numbered Products</button>
+    
+</div>
+
+    <table class="table-container">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Stock On Hand</th>
+            </tr>
+        </thead>
+        <tbody>  
+        {% for product in products_list %}
+        <tr>
+            <td>{{ product[0] }}</td>
+            <td>{{ product[1] }}</td>
+            <td>{{ product[2] }}</td>
+        </tr>
+    {% endfor %}
+      
+            
+          
+           
+        </tbody>
+    </table>
+    <!-- <div class="pagination">
+        <button id="prev" class="page-btn" ><a href="{{prev}}">Prev</a></button>
+        <button id="next" class="page-btn" ><a href="{{next}}">Next</a></button>
+    </div> -->
+</body>
+</html>
